@@ -6,6 +6,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getPercentage } from "./actions/getPercentage";
 import { colors } from "./const";
+
 const Wrapper = styled.div`
   display: flex;
   height: 75px;
@@ -15,11 +16,10 @@ const Wrapper = styled.div`
 `;
 const BarWrapper = styled.div`
   width: 75px;
-  margin-left: 20px;
+  margin-left: 50px;
 `;
 
-const OeeGraph = ({ props }) => {
-  const { MACHINE } = props;
+const OeeGraph = ({ MACHINE }) => {
   const data = useSelector((state) => state.OEE);
   const percentage = getPercentage(data, MACHINE);
 
@@ -41,9 +41,7 @@ const OeeGraph = ({ props }) => {
   );
 };
 OeeGraph.propTypes = {
-  props: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ).isRequired,
+  MACHINE: PropTypes.string.isRequired,
 };
 
 export default OeeGraph;

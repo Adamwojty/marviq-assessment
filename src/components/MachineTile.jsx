@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   display: flex;
   min-width: 280px;
   flex-direction: column;
-  margin: 50px 0;
+  margin: 50px 10px;
   min-height: 400px;
   border: 2px solid ${colors.BLACK};
 `;
@@ -36,7 +36,7 @@ const RowWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Header = styled.header`
+const Header = styled.h2`
   padding: 10px;
   font-size: 20px;
   color: ${colors.BLACK};
@@ -50,17 +50,13 @@ const Header = styled.header`
       animation: ${({ machineStatus }) => pulse(machineStatus)} 3s infinite;
     `};
 `;
-const MachineTile = ({ props, isLoading, status }) => {
-  const { MACHINE, PRODUCTION, SCRAP_PERCENTAGE, DOWNTIME_PERCENTAGE } = props;
-  const caltulatedData = useCalculateData(
-    PRODUCTION,
-    SCRAP_PERCENTAGE,
-    DOWNTIME_PERCENTAGE
-  );
+const MachineTile = ({ props, status }) => {
+  const { MACHINE } = props;
+  const caltulatedData = useCalculateData(props);
   const machineStatus = useColor(status, MACHINE);
   const { produced, scrap, downtime } = caltulatedData;
   return (
-    <Wrapper isLoading={isLoading}>
+    <Wrapper>
       <Header machineStatus={machineStatus}>{MACHINE}</Header>
       <InformationWrapper>
         <Produced productionNumber={produced} />
@@ -68,7 +64,7 @@ const MachineTile = ({ props, isLoading, status }) => {
           <Percentage props={scrap} title='Scrap' />
           <Percentage props={downtime} title='Downtime' />
         </RowWrapper>
-        <OeeGraph props={props} />
+        <OeeGraph {...props} />
         <Graph props={props} />
       </InformationWrapper>
     </Wrapper>

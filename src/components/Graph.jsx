@@ -12,8 +12,7 @@ const Wrapper = styled.div`
 `;
 
 const Graph = ({ props }) => {
-  const { SCRAP_PERCENTAGE } = props;
-  const graphData = useGraphData(props, SCRAP_PERCENTAGE);
+  const graphData = useGraphData(props);
   const originalData = useMemo(
     () => [
       {
@@ -48,4 +47,5 @@ Graph.propTypes = {
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
 };
+
 export default Graph;

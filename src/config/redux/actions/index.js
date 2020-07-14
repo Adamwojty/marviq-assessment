@@ -1,68 +1,39 @@
-import axios from "axios";
-
-export const FETCH_REQUEST = "FETCH_REQUEST";
-export const FETCH_SUCCESS = "FETCH_SUCCESS";
-export const FETCH_FAILURE = "FETCH_FAILURE";
+import { fetchRequest, fetchSuccess, fetchFailure } from "./actionTypes";
+import { getData } from "../../axios/connectors";
 
 // FETCH MACHINES
 export const fetchItems = async (dispatch) => {
   try {
-    dispatch({ type: FETCH_REQUEST });
-    const dataResponse = await axios.get(
-      "https://www.marviq.com/assessment/index.php?page=a&from=2018-01-07%2000:00:00"
+    dispatch(fetchRequest());
+    const dataResponse = await getData(
+      "index.php?page=a&from=2018-01-07%2000:00:00"
     );
-    await dispatch({
-      type: FETCH_SUCCESS,
-      payload: {
-        title: "machines",
-        data: dataResponse.data,
-      },
-    });
+    await dispatch(fetchSuccess(dataResponse.data, "machines"));
   } catch (err) {
-    dispatch({
-      type: FETCH_FAILURE,
-      payload: {
-        error: err,
-      },
-    });
+    dispatch(fetchFailure(err));
   }
 };
 // FETCH MACHINES STATUS
 export const fetchStatus = async (dispatch) => {
-  dispatch({ type: FETCH_REQUEST });
+  dispatch(fetchRequest());
   try {
-    const dataResponse = await axios.get(
-      "https://www.marviq.com/assessment/index.php?page=b&from=2018-01-07%2000:00:00"
+    const dataResponse = await getData(
+      "index.php?page=b&from=2018-01-07%2000:00:00"
     );
-    await dispatch({
-      type: FETCH_SUCCESS,
-      payload: {
-        title: "status",
-        data: dataResponse.data,
-      },
-    });
+    await dispatch(fetchSuccess(dataResponse.data, "status"));
   } catch (err) {
-    dispatch({
-      type: FETCH_FAILURE,
-      payload: {
-        error: err,
-      },
-    });
+    dispatch(fetchFailure(err));
   }
 };
 // FETCH MACHINE OEE INFO
 export const fetchOEE = async (dispatch) => {
-  dispatch({ type: FETCH_REQUEST });
+  dispatch(fetchRequest());
   try {
-    const dataResponse = await axios.get(
-      "https://www.marviq.com/assessment/index.php?page=c&from=2018-01-07%2000:00:00"
+    const dataResponse = await getData(
+      "index.php?page=c&from=2018-01-07%2000:00:00"
     );
-    await dispatch({
-      type: FETCH_SUCCESS,
-      payload: {
-        title: "OEE",
-        data: dataResponse.data,
-      },
-    });
-  } catch (err) {}
+    await dispatch(fetchSuccess(dataResponse.data, "OEE"));
+  } catch (err) {
+    dispatch(fetchFailure(err));
+  }
 };

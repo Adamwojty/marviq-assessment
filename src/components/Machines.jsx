@@ -10,13 +10,13 @@ const Wrapper = styled.main`
   justify-content: ${({ isLoading }) =>
     isLoading ? "center" : "space-evenly"};
   align-content: ${({ isLoading }) => (isLoading ? "center" : "start")};
-  margin: 10px;
   min-height: 100vh;
 `;
 
 const Machines = () => {
   const data = useSelector((state) => state);
   const { isLoading, machines, status } = data;
+
   return (
     <Wrapper isLoading={isLoading}>
       {isLoading ? (
